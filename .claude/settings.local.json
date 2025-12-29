@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer install:*)",
+      "Bash(powershell.exe -Command \"docker --version\")",
+      "Bash(powershell.exe -Command \"docker ps -a --format ''table {{.Names}}\\\\t{{.Status}}''\")",
+      "Bash(powershell.exe -Command \"cd ''d:\\\\Aplicatii GIT\\\\sad-task''; docker-compose -f docker-compose.dev.yml exec -T app php artisan migrate:fresh --force\")",
+      "Bash(docker exec:*)",
+      "Bash(curl:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker start:*)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}

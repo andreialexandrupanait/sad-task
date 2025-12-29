@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Checklist extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'task_id',
+        'name',
+        'position',
+    ];
+
+    public function task(): BelongsTo
+    {
+        return $this->belongsTo(Task::class);
+    }
+
+    public function items(): HasMany
+    {
+        return $this->hasMany(ChecklistItem::class)->orderBy('position');
+    }
+
+    public function getProgressAttribute(): int
+    {
+        $total = $this->items->count();
+
+        if ($total === 0) {
+            return 0;
+        }
+
+        $completed = $this->items->where('is_completed', true)->count();
+
+        return (int) round(($completed / $total) * 100);
+    }
+}
